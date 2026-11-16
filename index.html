@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090d1c"><title>Multiply Rush ⚡</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@500&display=swap');
+:root{--bg:#090d1c;--panel:#131e36;--line:#2b3c5d;--text:#f4f7ff;--muted:#9eacc9;--cyan:#5ee7f5;--pink:#ff70b7;--yellow:#ffda76;--green:#73f0ad;--red:#ff7185}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;padding:25px 15px 45px;color:var(--text);font-family:'Space Grotesk',sans-serif;background:radial-gradient(ellipse at 10% 0%,#1b3158,transparent 42%),radial-gradient(ellipse at 95% 90%,#351d4d,transparent 38%),var(--bg)}
+.app{width:min(850px,100%);margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{display:flex;gap:12px;align-items:center}.logo{width:46px;height:46px;border-radius:15px;background:linear-gradient(135deg,var(--cyan),#898cff);display:grid;place-items:center;color:#081020;font-size:27px;font-weight:900;box-shadow:0 8px 30px #5ee7f544}h1{font-size:27px;margin:0;letter-spacing:-1px}.sub{font-size:11px;color:var(--muted)}.pill{border:1px solid var(--line);border-radius:99px;padding:8px 12px;color:var(--muted);font-size:11px}
+.hero{text-align:center;margin:35px 0 23px}.eyebrow{color:var(--cyan);font-size:11px;font-weight:700;letter-spacing:3px}.hero h2{font-size:clamp(30px,6vw,48px);line-height:1.05;margin:10px 0;letter-spacing:-2px}.hero p{color:var(--muted);font-size:14px;margin:0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0}.stat,.card{background:linear-gradient(145deg,#172440,#10182c);border:1px solid var(--line);border-radius:17px;box-shadow:0 12px 35px #0002}.stat{padding:13px}.stat label{display:block;color:var(--muted);font-size:10px;letter-spacing:1px;text-transform:uppercase}.stat strong{display:block;font-size:25px;margin-top:4px;font-variant-numeric:tabular-nums}
+.game{padding:clamp(18px,4vw,30px);position:relative;overflow:hidden}.game:before{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:#5ee7f50c;right:-100px;top:-100px}.game-head{display:flex;justify-content:space-between;position:relative}.round{font-size:12px;color:var(--muted)}.round b{color:var(--text)}.timer{font:500 18px 'DM Mono';color:var(--yellow)}.track{height:9px;border-radius:99px;background:#263451;margin:12px 0 24px;overflow:hidden}.track div{height:100%;width:100%;background:linear-gradient(90deg,var(--cyan),#9b8cff,var(--pink));transition:width .05s linear}
+.qwrap{text-align:center;padding:10px 0}.question{font-size:clamp(60px,13vw,100px);font-weight:700;letter-spacing:-5px}.op{color:var(--cyan);padding:0 8px}.hint{color:var(--muted);font-size:13px;margin:5px 0 18px}.answer-row{display:flex;gap:10px;max-width:460px;margin:auto}input{min-width:0;flex:1;background:#0a1224;border:1px solid #344666;color:var(--text);border-radius:13px;padding:15px;font-size:25px;text-align:center;outline:none}input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #5ee7f51a}input::placeholder{color:#667797}
+button{border:0;border-radius:12px;padding:12px 17px;font:700 13px 'Space Grotesk';cursor:pointer;transition:.15s}button:hover{filter:brightness(1.12);transform:translateY(-1px)}button:disabled{opacity:.4;cursor:not-allowed;transform:none}.primary{background:linear-gradient(120deg,var(--cyan),#929bff);color:#081020}.secondary{background:#1b2946;color:var(--text);border:1px solid var(--line)}.feedback{min-height:26px;text-align:center;font-size:14px;font-weight:700;margin-top:15px}.good{color:var(--green)}.bad{color:var(--red)}.info{color:var(--yellow)}.controls{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:17px}.controls button{font-size:12px;padding:9px 13px}
+.below{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:13px}.mini{padding:16px}.mini h3{font-size:13px;margin:0 0 9px}.mini p{color:var(--muted);font-size:12px;line-height:1.6;margin:0}.chips{display:flex;gap:7px;flex-wrap:wrap}.chip{border:1px solid var(--line);background:#1a2945;padding:6px 10px;border-radius:99px;font-size:12px;color:var(--cyan)}
+.overlay{position:fixed;inset:0;background:#050914dd;backdrop-filter:blur(9px);display:none;place-items:center;padding:18px;z-index:5}.overlay.show{display:grid}.result{width:min(480px,100%);padding:27px;text-align:center;background:linear-gradient(145deg,#182747,#10182d);border:1px solid #3a4d70;border-radius:24px;box-shadow:0 25px 90px #0009}.medal{font-size:50px}.result h2{font-size:29px;margin:8px}.final{font-size:58px;font-weight:700;color:var(--cyan);letter-spacing:-3px}.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0}.result-grid div{background:#0b1428;border:1px solid var(--line);border-radius:12px;padding:12px 4px}.result-grid b{display:block;font-size:20px}.result-grid span{font-size:10px;color:var(--muted);text-transform:uppercase}.result p{font-size:13px;color:var(--muted)}.result .primary{width:100%;margin-top:10px}
+.toast{position:fixed;top:16px;left:50%;transform:translate(-50%,-20px);opacity:0;background:#1b2946;border:1px solid var(--line);border-radius:99px;padding:10px 15px;transition:.2s;z-index:8}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:560px){body{padding:17px 11px}.stats{grid-template-columns:repeat(2,1fr)}.below{grid-template-columns:1fr}.answer-row{flex-direction:column}.question{letter-spacing:-3px}.pill{font-size:9px}}
+</style></head>
+<body><main class="app">
+<header class="top"><div class="brand"><div class="logo">×</div><div><h1>Multiply Rush</h1><div class="sub">THE 12–20 TABLE ARCADE</div></div></div><div class="pill">⚡ 5-SECOND MODE</div></header>
+<section class="hero"><div class="eyebrow">TRAIN YOUR BRAIN. BEAT THE CLOCK.</div><h2>Ready, set, <span style="color:var(--cyan)">multiply!</span></h2><p>150 random questions from the 12–20 tables. 5 seconds each. Chase the perfect score.</p></section>
+<section class="card mini" style="margin:18px 0;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+  <div><h3 style="margin:0 0 4px">🎯 Choose your challenge</h3><p style="margin:0;color:var(--muted);font-size:12px">Pick how many points you want to play for.</p></div>
+  <select id="modeSelect" aria-label="Choose challenge length" style="background:#0a1224;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:11px 14px;font:600 14px 'Space Grotesk',sans-serif">
+    <option value="50">50 points</option><option value="100">100 points</option><option value="150" selected>150 points</option><option value="unlimited">Unlimited points</option>
+  </select>
+</section>
+<section class="stats"><div class="stat"><label>🏆 Score</label><strong id="score">0</strong></div><div class="stat"><label>🧩 Question</label><strong id="count">0 / 150</strong></div><div class="stat"><label>🔥 Streak</label><strong id="streak">0</strong></div><div class="stat"><label>🎯 Accuracy</label><strong id="accuracy">—</strong></div></section>
+<section class="card game"><div class="game-head"><div class="round">ROUND <b id="round">READY</b> <span id="tableTag" style="color:var(--cyan);margin-left:8px"></span></div><div class="timer" id="timer">5.0s</div></div><div class="track"><div id="timerBar"></div></div>
+<div class="qwrap"><div class="question" id="question">12 <span class="op">×</span> 7</div><div class="hint" id="hint">Press start when ready. Type your answer and hit Enter.</div><form class="answer-row" id="answerForm"><input id="answer" type="number" inputmode="numeric" autocomplete="off" placeholder="Your answer" aria-label="Your answer" disabled><button class="primary" id="submit" disabled>Lock it in ↵</button></form></div>
+<div class="feedback" id="feedback" aria-live="polite">Your challenge is waiting!</div><div class="controls"><button class="secondary" id="start">▶ Start challenge</button><button class="secondary" id="pause" disabled>Ⅱ Pause</button><button class="secondary" id="finishEarly" disabled>■ End challenge</button><button class="secondary" id="sound">🔊 Sound on</button><button class="secondary" id="reset">↻ Reset</button></div></section>
+<section class="below"><div class="card mini"><h3>🎮 YOUR MISSION</h3><p>Correct answer = 1 point. Wrong or timeout = 0. Choose 50, 100, 150 or go unlimited. Build your streak and beat your best!</p></div><div class="card mini"><h3>📚 TABLES IN PLAY</h3><div class="chips"><span class="chip">12–14</span><span class="chip">15–17</span><span class="chip">18–20</span></div><p style="margin-top:10px">Questions are shuffled randomly. Every new round is different.</p></div></section>
+<p style="text-align:center;color:var(--muted);font-size:11px;margin-top:18px">TIP: Use your keyboard number keys. Trust your brain. ✨</p></main>
+
+<footer class="site-footer" style="text-align:center;color:var(--muted);font-size:12px;margin:28px 0 4px;padding-top:16px;border-top:1px solid var(--line)">
+  Made with love by <strong style="color:var(--cyan)">Vijay Daniel</strong>
+</footer>
+
+<div class="overlay" id="overlay" role="dialog" aria-modal="true"><div class="result"><div class="medal" id="medal">🏆</div><h2>Challenge complete!</h2><div class="final" id="finalScore">0/150</div><b id="grade">Nice effort!</b><div class="result-grid"><div><b id="correct">0</b><span>Correct</span></div><div><b id="wrong">0</b><span>Wrong / missed</span></div><div><b id="best">0</b><span>Best streak</span></div></div><p id="resultMessage">Every round makes you faster.</p><button class="primary" id="playAgain">Play again 🚀</button></div></div>
+<script>
+(()=> {
+ const $=id=>document.getElementById(id), LIMIT=5000;
+ let questions=[],index=0,score=0,correct=0,wrong=0,streak=0,best=0;
+ let active=false,paused=false,deadline=0,remaining=LIMIT,tick=null,nextTimeout=null;
+ let sound=true,audio=null,current=null,target=150;
+ function beep(freq=650,duration=.09){
+  if(!sound)return;
+  try{audio=audio||new(window.AudioContext||window.webkitAudioContext)();const o=audio.createOscillator(),g=audio.createGain();o.frequency.value=freq;g.gain.value=.04;o.connect(g);g.connect(audio.destination);o.start();o.stop(audio.currentTime+duration)}catch(e){}
+ }
+ function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+ function make(){const pool=[];for(let a=12;a<=20;a++)for(let b=1;b<=10;b++)pool.push({a,b});questions=shuffle(pool)}
+ function clear(){clearInterval(tick);clearTimeout(nextTimeout);tick=nextTimeout=null}
+ function stats(){
+  $('score').textContent=score;
+  $('count').textContent=index+' / '+(target===Infinity?'∞':target);
+  $('streak').textContent=streak;
+  $('accuracy').textContent=index?Math.round(correct/index*100)+'%':'—';
+  $('round').textContent=active?(index+1)+' / '+(target===Infinity?'∞':target):'READY';
+ }
+ function feedback(s,c=''){$('feedback').textContent=s;$('feedback').className='feedback '+c}
+ function draw(){
+  const p=Math.max(0,remaining/LIMIT*100);
+  $('timer').textContent=(remaining/1000).toFixed(1)+'s';
+  $('timerBar').style.width=p+'%';
+  $('timer').style.color=remaining<1600?'var(--red)':'var(--yellow)';
+ }
+ function show(){
+  if(!active)return;
+  if(target!==Infinity&&index>=target){finish();return}
+  if(index>0&&index%questions.length===0)questions=shuffle(questions);
+  current=questions[index%questions.length];
+  $('question').innerHTML=current.a+' <span class="op">×</span> '+current.b;
+  $('tableTag').textContent=current.a+' TABLE';
+  $('answer').value='';$('answer').disabled=false;$('submit').disabled=false;
+  $('answer').focus();$('hint').textContent='Type your answer and press Enter — trust your first instinct!';
+  remaining=LIMIT;deadline=performance.now()+remaining;draw();
+  clearInterval(tick);tick=setInterval(timer,35);stats();
+ }
+ function timer(){remaining=Math.max(0,deadline-performance.now());draw();if(remaining<=0)respond(null)}
+ function lock(){clearInterval(tick);tick=null;$('answer').disabled=true;$('submit').disabled=true}
+ function respond(value){
+  if(!active||paused||!tick)return;
+  lock();index++;
+  if(value===current.a*current.b){
+   score++;correct++;streak++;best=Math.max(best,streak);
+   feedback(streak>=5?'🔥 '+streak+' IN A ROW! ON FIRE!':'✓ Correct! +1 point','good');beep(850,.1);
+  }else{
+   wrong++;streak=0;
+   feedback(value===null?'⏰ Time up! It was '+current.a*current.b+'.':'Not quite — '+current.a+' × '+current.b+' = '+current.a*current.b+'. Keep going!','bad');beep(280,.12);
+  }
+  stats();$('hint').textContent='Get ready for the next one…';nextTimeout=setTimeout(show,650);
+ }
+ function start(){
+  clear();target=$('modeSelect').value==='unlimited'?Infinity:Number($('modeSelect').value);
+  make();index=score=correct=wrong=streak=best=0;active=true;paused=false;
+  $('overlay').classList.remove('show');$('start').disabled=true;$('start').textContent='Challenge running';
+  $('pause').disabled=false;$('pause').textContent='Ⅱ Pause';$('finishEarly').disabled=false;
+  stats();feedback('Let’s go! First question coming up.','good');show();
+ }
+ function finish(){
+  active=false;paused=false;clear();$('answer').disabled=true;$('submit').disabled=true;
+  $('pause').disabled=true;$('finishEarly').disabled=true;$('start').disabled=false;$('start').textContent='▶ Start challenge';
+  const denominator=index||1,pct=score/denominator*100;
+  $('finalScore').textContent=target===Infinity?score+' points':score+'/'+target;
+  $('correct').textContent=correct;$('wrong').textContent=wrong;$('best').textContent=best;
+  let grade,message,medal;
+  if(pct>=95){grade='LEGENDARY!';message='A near-perfect run. Your multiplication speed is elite.';medal='👑'}
+  else if(pct>=85){grade='AMAZING WORK!';message='Fantastic accuracy and speed. You are getting sharp.';medal='🏆'}
+  else if(pct>=70){grade='GREAT PROGRESS!';message='Strong run! A little more practice can push you higher.';medal='🥇'}
+  else if(pct>=50){grade='GOOD EFFORT!';message='Repeat the challenge and beat this score.';medal='🚀'}
+  else{grade='KEEP GRINDING!';message='No stress — practice makes progress. Try again.';medal='💪'}
+  $('grade').textContent=grade;$('resultMessage').textContent=target===Infinity?'You completed '+index+' questions. '+message:message;
+  $('medal').textContent=medal;$('overlay').classList.add('show');beep(700,.2);stats();
+ }
+ function pause(){
+  if(!active)return;
+  if(!paused){
+   paused=true;remaining=Math.max(0,deadline-performance.now());clearInterval(tick);tick=null;
+   $('answer').disabled=true;$('submit').disabled=true;$('pause').textContent='▶ Resume';
+   feedback('⏸ Paused. Take a breath.','info');$('timer').textContent='PAUSED';
+  }else{
+   paused=false;deadline=performance.now()+remaining;$('answer').disabled=false;$('submit').disabled=false;
+   $('pause').textContent='Ⅱ Pause';$('answer').focus();feedback('Back in action!','good');tick=setInterval(timer,35);
+  }
+ }
+ $('answerForm').addEventListener('submit',e=>{e.preventDefault();if($('answer').value.trim()!=='')respond(Number($('answer').value))});
+ $('start').addEventListener('click',start);$('playAgain').addEventListener('click',start);$('pause').addEventListener('click',pause);
+ $('finishEarly').addEventListener('click',()=>{if(active)finish()});
+ $('reset').addEventListener('click',()=>{
+  active=paused=false;clear();index=score=correct=wrong=streak=best=0;target=$('modeSelect').value==='unlimited'?Infinity:Number($('modeSelect').value);
+  $('overlay').classList.remove('show');$('answer').value='';$('answer').disabled=true;$('submit').disabled=true;
+  $('pause').disabled=true;$('finishEarly').disabled=true;$('start').disabled=false;$('start').textContent='▶ Start challenge';
+  $('question').innerHTML='12 <span class="op">×</span> 7';$('tableTag').textContent='';$('timer').textContent='5.0s';
+  $('timerBar').style.width='100%';$('hint').textContent='Press start when ready. Type your answer and hit Enter.';
+  feedback('Your challenge is waiting!');stats();
+ });
+ $('sound').addEventListener('click',()=>{sound=!sound;$('sound').textContent=sound?'🔊 Sound on':'🔇 Sound off';if(sound)beep()});
+ $('modeSelect').addEventListener('change',()=>{if(!active){target=$('modeSelect').value==='unlimited'?Infinity:Number($('modeSelect').value);stats()}});
+ target=Number($('modeSelect').value);make();stats();
+})();
+</script></body></html>
