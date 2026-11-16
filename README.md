@@ -31,13 +31,13 @@ In `index.html`:
 - The game currently uses tables 12 through 20. Edit the table range in `make()` to customize it.
 
 
-##💡 Why I Built This
+## Why I Built This💡
 
 This project started as a personal learning experiment. I believe improving a skill becomes easier when we make the learning process enjoyable. Instead of spending time only solving questions on paper, I decided to build a small application that challenges me to calculate faster every day.
 
 Built for fun, driven by learning, and inspired by my goal of becoming better at mathematics.
 
-##🛠️ Technologies Used
+## Technologies Used ⚒️
 
 HTML5
 
